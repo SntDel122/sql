@@ -1,0 +1,27 @@
+fatura detalle tabla
+create TABLE factura_detalle(
+cod_facdetalle int AUTO_INCREMENT primary KEY, 
+factura_cod int not null,
+producto_cod int not null,
+cantidad int not null,
+valor_venta decimal(10,0) not null DEFAULT 0, 
+subtotal decimal (10,0) as (valor_venta*cantidad), 
+descuento decimal(10,2) not null default 0,
+neto decimal(10,0) as (subtotal* (1-descuento)), 
+INDEX(factura_cod),
+FOREIGN KEY(factura_cod) REFERENCES factura_cabeza(cod_factura) on DELETE CASCADE ON UPDATE CASCADE,
+FOREIGN KEY(producto_cod) REFERENCES producto (cod producto) on DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+entrada detalle tabla
+create TABLE entrada_detalle(
+    cod_edetalle int AUTO_INCREMENT primary KEY, entrada_cod int not null,
+    producto_cod int not null,
+    cantidad int not null,
+    valor_compra decimal(10,0) not null DEFAULT 0,
+    subtotal decimal (10,0) as (valor_compra*cantidad),
+    INDEX(entrada_cod),
+    FOREIGN KEY(entrada_cod) REFERENCES entrada_cabeza (cod_entrada) on DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(producto_cod) REFERENCES producto (cod producto) on DELETE CASCADE ON UPDATE CASCADE
+);
