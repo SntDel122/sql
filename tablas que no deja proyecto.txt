@@ -1,0 +1,50 @@
+arrendamiento
+
+CREATE TABLE arrendatarios (
+    id_arrendatario INT AUTO_INCREMENT PRIMARY KEY,
+    identificacion VARCHAR(50) NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    garantia VARCHAR(50) NOT NULL,
+    fecha_nac VARCHAR(50) NOT NULL,
+    sexo ENUM('masculino','femenino'),
+    estado_civil ENUM('casado','soltero','divorciado','union libre','viudo'),
+    INDEX(id_arrendatario), -- Índice añadido
+    FOREIGN KEY (id_asesor) REFERENCES asesor_venta(id_asesor) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+alquiler inmuebles
+
+CREATE TABLE alquiler_inmuebles (
+    id_alquiler INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_inicio VARCHAR(50) NOT NULL,
+    fecha_fin VARCHAR(50) NOT NULL,
+    forma_pago VARCHAR(50) NOT NULL,
+    id_inmueble INT,
+    id_arrendatario INT,
+    INDEX(id_alquiler), -- Añadido índice
+    FOREIGN KEY (id_inmueble) REFERENCES inmuebles(id_inmueble) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_arrendatario) REFERENCES arrendatarios(id_arrendatario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+Tabla inmueble
+
+CREATE TABLE inmuebles (
+    id_inmueble INT AUTO_INCREMENT PRIMARY KEY,
+    direccion VARCHAR(50) NOT NULL,
+    barrio VARCHAR(50) NOT NULL,
+    ciudad VARCHAR(50) NOT NULL,
+    departamento VARCHAR(50) NOT NULL,
+    años_construccion VARCHAR(50) NOT NULL,
+    tipo_inmueble VARCHAR(50) NOT NULL,
+    area_mts2 VARCHAR(50) NOT NULL,
+    nro_habitaciones VARCHAR(50) NOT NULL,
+    nro_baños VARCHAR(50) NOT NULL,
+    garaje ENUM('S','N') NOT NULL, -- Cambiado a ENUM
+    precio_alquiler DECIMAL(10, 2) NOT NULL, -- Cambiado a DECIMAL
+    observaciones VARCHAR(50) NOT NULL,
+    estado_inmueble VARCHAR(50) NOT NULL,
+    INDEX(id_inmueble), -- Índice añadido
+    FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
